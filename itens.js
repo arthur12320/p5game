@@ -222,6 +222,7 @@ function loadItens(){
                 player.displayMode = 'walking';
                 displayMessage = true;
                 messageToDisplay = `used a health potion`
+                player.equipItem();
                 setTimeout(() => {
                     displayMessage=false;
                 }, 2000);
@@ -253,20 +254,22 @@ function loadItens(){
     itens.push(healthPotionItem)
 
 
-    //molotov 7
+    //molotov 9
     let molotovimg = loadImage('./assets/molotov.png');
     let molotovGround = loadImage('./assets/molotov.png');
+    let molotovGroundOverlay = loadImage('./assets/molotovGroungOverlay.png')
     let molotovItem = {
         tile:molotovimg,
         groundTile:molotovGround,
         name:'molotov',
         width:100,
         height:100,
-        range: 75,
+        range: 600,
+        spread: 1,
         damage:50,
         collide:false,
         pickable:true,
-        mode:'walking',
+        mode:'throw',
         delay:500,
         cooldown:false,
         status:{
@@ -276,9 +279,78 @@ function loadItens(){
             let copy = JSON.parse(JSON.stringify(molotovItem));
             copy.tile = molotovimg;
             copy.groundTile = molotovGround;
+            copy.use = this.use;
             player.inventory.push(copy);
             this.remove = true;
             player.equipItem();
+        },
+        use: function(){
+            let mousePos = createVector(mouseX,mouseY);
+            let centerPos = createVector(windowWidth/2,windowHeight/2);
+
+            let dist = mousePos.dist(centerPos);
+
+            if(dist <= this.range/2){
+                let blockX = Math.floor(mouseXToRealX(mouseX)/blockSize);
+                let blockY = Math.floor(mouseYToRealY(mouseY)/blockSize);
+                for(let i = -this.spread; i <= this.spread;i++){
+                    for(let j = -this.spread; j<= this.spread;j++){
+                        world.setOverlay(blockX+i,blockY+j,molotovGroundOverlay);
+                    }
+                }
+                player.inventory.splice(player.selectediventory,1);
+                player.displayMode = 'walking';
+                displayMessage = true;
+                messageToDisplay = `used a molotov cocktail`
+                player.equipItem();
+
+
+                mobs.forEach(mob => {
+                    let mobBlockX = Math.floor(mob.x/blockSize);
+                    let mobBlockY = Math.floor(mob.y/blockSize);
+                    
+                    for(let i = -this.spread; i <= this.spread;i++){
+                        for(let j = -this.spread; j<= this.spread;j++){
+                            if(mobBlockX ==blockX+i && mobBlockY == blockY+j){
+                                mob.giveEffect('fire',6000)
+                                mob.health-=10;
+                                setTimeout(() => {
+                                    mob.health-=10;
+                                    setTimeout(() => {
+                                        mob.health-=10;
+                                        setTimeout(() => {
+                                            mob.health-=10;
+                                            setTimeout(() => {
+                                                mob.health-=10;
+                                                setTimeout(() => {
+                                                    mob.health-=10;
+                                                    setTimeout(() => {
+                                                        
+                                                    }, 1000);
+                                                }, 1000);
+                                            }, 1000);
+                                        }, 1000);
+                                    }, 1000);
+                                }, 1000);
+                            }
+                        }
+                    }
+                    
+                    
+                })
+
+                setTimeout(() => {
+                    for(let i = -this.spread; i <= this.spread;i++){
+                        for(let j = -this.spread; j<= this.spread;j++){
+                            world.setOverlay(blockX+i,blockY+j,undefined);
+                        }
+                    }
+                }, 6000);
+            }else{
+                displayMessage = true;
+                messageToDisplay = `can't throw that far`
+            }
+            
         }
     }
     itens.push(molotovItem)

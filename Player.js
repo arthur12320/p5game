@@ -244,6 +244,8 @@ function Player(ww,wh,bs,world){
                 this.meleeWeapon.cooldown = false;
             }
             this.displayMode = this.inventory[x].mode;
+        }else{
+            this.displayMode = 'walking';
         }
     }
 

@@ -127,6 +127,9 @@ function World(blockSize,pickups){
         if(!(typeof lines[x] == 'undefined')){
             if(!(typeof lines[x][y] === 'undefined')){
                 image(lines[x][y].tile,posx,posy,s,s)
+                if(typeof lines[x][y].overlay != 'undefined'){
+                    image(lines[x][y].overlay,posx,posy,s,s);
+                }
             }else{
                 fill(40,40,40)
                 rect(posx,posy,s,s);
@@ -153,6 +156,10 @@ function World(blockSize,pickups){
 
     this.getBlock = function(x,y){
         return lines[x][y];
+    }
+
+    this.setOverlay = function(x,y,overlay){
+        lines[x][y].overlay = overlay;
     }
 
     this.getSurround = function(x,y){

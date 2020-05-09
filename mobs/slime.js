@@ -18,6 +18,7 @@ function Slime(ww, wh, x, y, bs, index) {
     this.lastMoveX = 0;
     this.lastMoveY = 0;
     this.damage = 10;
+    this.effectsImages = {};
 
     this.dropTable = [
         {
@@ -58,7 +59,12 @@ function Slime(ww, wh, x, y, bs, index) {
             }
 
         }
-
+        for (var [key, value] of Object.entries(this.effectsImages)) {
+            image(value, -(player.x - (ww / 2)) + (this.x - (this.width / 2)), -(player.y - (wh / 2)) + (this.y - (this.height / 2)), this.width, this.height);
+        }
+        if(this.health <= 0){
+            this.die()
+        }
 
     }
 
@@ -178,6 +184,18 @@ function Slime(ww, wh, x, y, bs, index) {
         rect(-(player.x - (ww / 2)) + (this.x - (this.width / 2)), -(player.y - (wh / 2)) + (this.y - (this.height / 2)) - 20, (this.width * this.health) / this.fullHealth, 10);
     }
 
+
+    this.giveEffect = function(effect,time){
+        switch(effect){
+            case 'fire':
+                this.effectsImages.burnt  = loadImage('../assets/molotovGroungOverlay.png');
+                
+                setTimeout(() => {
+                    delete this.effectsImages.burnt;
+                }, time);
+                break;
+        }
+    }
 
     this.die = function(){
 

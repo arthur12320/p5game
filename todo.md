@@ -2,8 +2,8 @@
 
 - [ ] add splash potion of damage
 - [ ] add bomb
-- [ ] add molotov coquetail
+- [X] add molotov coquetail
 - [ ] add store
 - [ ] add item inspect
 - [ ] add zombie
-- [ ] add throw mode
+- [X] add throw mode

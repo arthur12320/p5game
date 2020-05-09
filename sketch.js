@@ -53,6 +53,7 @@ function draw(){
     let blockY;
     let blocks;
     switch(player.displayMode){
+        
         case 'walking':
             player.move();
             handleCollisions();
@@ -71,6 +72,17 @@ function draw(){
                 debugDisplay();
             }
             diplayItenBar()
+            break;
+        case 'throw':
+            handleCollisions();
+            displayWalking();
+            console.log(player.displayMode)
+            displayThrow(player);
+            if(debugMode){
+                debugDisplay();
+            }
+            diplayItenBar()
+            player.move();
             break;
         case 'iventary':
             player.move();
@@ -121,6 +133,9 @@ function mousePressed(){
         case 'walking':
             handleClickWalking(player);
             break;
+        case 'throw':
+            handleClickWalking(player);
+            break;
         case 'melee':
             handleClickMelee(player);
             break;
@@ -138,6 +153,7 @@ function displayWalking(){
     })
     removeMobs();
 }
+
 
 
 function displayInventary(){
