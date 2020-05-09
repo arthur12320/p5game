@@ -253,5 +253,36 @@ function loadItens(){
     itens.push(healthPotionItem)
 
 
+    //molotov 7
+    let molotovimg = loadImage('./assets/molotov.png');
+    let molotovGround = loadImage('./assets/molotov.png');
+    let molotovItem = {
+        tile:molotovimg,
+        groundTile:molotovGround,
+        name:'molotov',
+        width:100,
+        height:100,
+        range: 75,
+        damage:50,
+        collide:false,
+        pickable:true,
+        mode:'walking',
+        delay:500,
+        cooldown:false,
+        status:{
+            
+        },
+        interact: function(){
+            let copy = JSON.parse(JSON.stringify(molotovItem));
+            copy.tile = molotovimg;
+            copy.groundTile = molotovGround;
+            player.inventory.push(copy);
+            this.remove = true;
+            player.equipItem();
+        }
+    }
+    itens.push(molotovItem)
+
+
     return itens;
 }
