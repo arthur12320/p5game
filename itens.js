@@ -185,7 +185,7 @@ function loadItens(){
                 player.equipItem();
             }
             displayMessage = true;
-            messageToDisplay = `ganhou +${this.quantity} gold`
+            messageToDisplay = `picked up +${this.quantity} gold`
             setTimeout(() => {
                 displayMessage=false;
             }, 2000);
@@ -193,7 +193,64 @@ function loadItens(){
     }
     itens.push(goldItem)
 
+    //health_potion 8
+    let healthPotionimg = loadImage('./assets/health_potion.png');
+    let healthPotionGround = loadImage('./assets/health_potion.png');
+    let healthPotionItem = {
+        tile:healthPotionimg,
+        groundTile:healthPotionGround,
+        name:'healthPotion',
+        width:100,
+        height:100,
+        range: 75,
+        damage:50,
+        collide:false,
+        pickable:true,
+        mode:'walking',
+        delay:500,
+        cooldown:false,
+        status:{
+            
+        },
+        use: function(){
+            if(player.health != player.fullHealth){
+                player.health += 10;
+                if(player.health > player.fullHealth){
+                    player.health = player.fullHealth;
+                }
+                player.inventory.splice(player.selectediventory,1);
+                player.displayMode = 'walking';
+                displayMessage = true;
+                messageToDisplay = `used a health potion`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }else{
+                displayMessage = true;
+                messageToDisplay = `no need to use that`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
+        },
+        interact: function(){
+            let copy = JSON.parse(JSON.stringify(healthPotionItem));
+            copy.tile = healthPotionimg;
+            copy.groundTile = healthPotionGround;
+            copy.use = this.use;
+            player.inventory.push(copy);
+            this.remove = true;
+            player.equipItem();
 
+            displayMessage = true;
+            messageToDisplay = `picked up +1 health potion`
+            setTimeout(() => {
+                displayMessage=false;
+            }, 2000);
+        },
+        
+    }
+    itens.push(healthPotionItem)
 
 
     return itens;

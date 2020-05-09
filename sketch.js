@@ -118,6 +118,9 @@ function mousePressed(){
         case 'place':
             handleClickWalking(player);
             break;
+        case 'walking':
+            handleClickWalking(player);
+            break;
         case 'melee':
             handleClickMelee(player);
             break;

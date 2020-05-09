@@ -56,18 +56,25 @@ function posToBlockY(posy){
     return y = Math.floor(posy/blockSize)
 }
 
-function handleClickWalking(player){
+function handleClickWalking(){
     let x = mouseXtoblockX(mouseX);
     let y = mouseYtoblockY(mouseY);
 
     let playerx = posToBlockX(player.x);
     let playery = posToBlockY(player.y)
 
-    if(x !== playerx || y !== playery){
-        console.log(`clicked at : x=${x} y=${y}`);  
-        world.modblock(x,y);
+    console.log('using')
+    console.log(player.inventory)
+    console.log(player.selectediventory)
+    if(player.inventory[player.selectediventory].use != 'undefined'){
+        player.inventory[player.selectediventory].use();
     }else{
-        console.log('cannot click on the block you are standing');
+        if(x !== playerx || y !== playery){
+            console.log(`clicked at : x=${x} y=${y}`);  
+            world.modblock(x,y);
+        }else{
+            console.log('cannot click on the block you are standing');
+        }
     }
 }
 

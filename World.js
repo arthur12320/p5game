@@ -82,6 +82,26 @@ function World(blockSize,pickups){
         }
         pickups.push(pickup);
     }
+
+    for(let i = 0;i < 5;i++){
+        let randomx = Math.floor(Math.random()*blocksx);
+        let randomy = Math.floor(Math.random()*blocksy);
+
+        let pickup = {
+            ...itens[8],
+            name:itens[8].name,
+            tile:itens[8].tile,
+            x: randomx*blockSize,
+            y: randomy*blockSize,
+            blockx: randomx,
+            blocky: randomy,
+            blockSize: blockSize,
+            interact:itens[8].interact,
+            use:itens[8].use,
+            remove:false
+        }
+        pickups.push(pickup);
+    }
     
     
     
