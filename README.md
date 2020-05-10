@@ -32,7 +32,7 @@ while trying to make the game my focus qas to try to create something that worke
 
 - [ ] variable size of screen (with any size of the display screen the game should recalculate and work fine) 
 - [ ] variable block sizes (some freaky things happen with collision currently)
-- [ ] some good kind of melee colision (at the moment i use a circle hit box, because it was the one i got working 😂😂😂)
+- [X] some good kind of melee colision (at the moment i use a circle hit box, because it was the one i got working 😂😂😂)
 
 
 # gallery 

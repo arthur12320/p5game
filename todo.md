@@ -7,3 +7,4 @@
 - [ ] add item inspect
 - [ ] add zombie
 - [X] add throw mode
+- [ ] redo itens images (ground/hand/icon)
