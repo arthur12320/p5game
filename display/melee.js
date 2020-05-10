@@ -50,15 +50,3 @@ function handleClickMelee(player){
     }
 }   
 
-function drawWeapon(angle){
-    
-        push();
-        translate(windowWidth/2,windowHeight/2);
-        imageMode(CENTER);
-        angleMode(DEGREES)
-        rotate(-angle+90);
-        image(player.meleeWeapon.tile,0,-player.meleeWeapon.range/2,player.meleeWeapon.width,player.meleeWeapon.height);
-        imageMode(CORNERS);
-        pop()
-    
-}

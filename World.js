@@ -118,6 +118,38 @@ function World(blockSize,pickups){
         }
         pickups.push(pickup);
     }
+
+    for(let i = 0;i < 5;i++){
+        let randomx = Math.floor(Math.random()*blocksx);
+        let randomy = Math.floor(Math.random()*blocksy);
+
+        let pickup = {
+            ...itens[10],
+            x: randomx*blockSize,
+            y: randomy*blockSize,
+            blockx: randomx,
+            blocky: randomy,
+            blockSize: blockSize,
+            remove:false
+        }
+        pickups.push(pickup);
+    }
+
+    for(let i = 0;i < 5;i++){
+        let randomx = Math.floor(Math.random()*blocksx);
+        let randomy = Math.floor(Math.random()*blocksy);
+
+        let pickup = {
+            ...itens[11],
+            x: randomx*blockSize,
+            y: randomy*blockSize,
+            blockx: randomx,
+            blocky: randomy,
+            blockSize: blockSize,
+            remove:false
+        }
+        pickups.push(pickup);
+    }
     
     
     

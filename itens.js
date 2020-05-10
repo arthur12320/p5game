@@ -128,19 +128,52 @@ function loadItens(){
         damage:50,
         collide:false,
         pickable:true,
-        mode:'melee',
+        mode:'walking',
         delay:500,
         cooldown:false,
         status:{
             
         },
+        use: function(){
+
+            let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+            player.displayWeapon = true;
+            mobs.forEach(mob=>{
+                x1 = player.x;
+                y1 = player.y;
+                x2 = player.x+finish.x;
+                y2 = player.y-finish.y;
+
+                rx = mob.x - (mob.width/2);
+                ry = mob.y - (mob.height/2);
+                rw = mob.width;
+                rh = mob.height;
+
+                if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                    mob.health-=this.damage;
+                }
+            })
+            setTimeout(() => {
+                player.displayWeapon = false;
+            }, this.delay);
+        },
         interact: function(){
-            let copy = JSON.parse(JSON.stringify(swordItem));
-            copy.tile = swordimg;
-            copy.groundTile = swordGround;
-            player.inventory.push(copy);
-            this.remove = true;
-            player.equipItem();
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(swordItem));
+                copy.tile = swordimg;
+                copy.groundTile = swordGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
+            
         }
     }
     itens.push(swordItem)
@@ -175,14 +208,22 @@ function loadItens(){
                 player.inventory[foundIndex].quantity += this.quantity;
                 this.remove = true;
             }else{
-                let copy = JSON.parse(JSON.stringify(goldItem));
-                copy.quantity = this.quantity;
-                copy.tile = goldimg;
-                copy.groundTile = goldGround;
-                player.inventory.push(copy);
-                player.gold += this.quantity;
-                this.remove = true;
-                player.equipItem();
+                if(player.inventory.length < player.maxinventory){
+                    let copy = JSON.parse(JSON.stringify(goldItem));
+                    copy.quantity = this.quantity;
+                    copy.tile = goldimg;
+                    copy.groundTile = goldGround;
+                    player.inventory.push(copy);
+                    player.gold += this.quantity;
+                    this.remove = true;
+                    player.equipItem();
+                }
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+                return;
             }
             displayMessage = true;
             messageToDisplay = `picked up +${this.quantity} gold`
@@ -235,19 +276,27 @@ function loadItens(){
             }
         },
         interact: function(){
-            let copy = JSON.parse(JSON.stringify(healthPotionItem));
-            copy.tile = healthPotionimg;
-            copy.groundTile = healthPotionGround;
-            copy.use = this.use;
-            player.inventory.push(copy);
-            this.remove = true;
-            player.equipItem();
-
-            displayMessage = true;
-            messageToDisplay = `picked up +1 health potion`
-            setTimeout(() => {
-                displayMessage=false;
-            }, 2000);
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(healthPotionItem));
+                copy.tile = healthPotionimg;
+                copy.groundTile = healthPotionGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+    
+                displayMessage = true;
+                messageToDisplay = `picked up +1 health potion`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
         },
         
     }
@@ -276,13 +325,21 @@ function loadItens(){
             
         },
         interact: function(){
-            let copy = JSON.parse(JSON.stringify(molotovItem));
-            copy.tile = molotovimg;
-            copy.groundTile = molotovGround;
-            copy.use = this.use;
-            player.inventory.push(copy);
-            this.remove = true;
-            player.equipItem();
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(molotovItem));
+                copy.tile = molotovimg;
+                copy.groundTile = molotovGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            } else {
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
         },
         use: function(){
             let mousePos = createVector(mouseX,mouseY);
@@ -354,6 +411,135 @@ function loadItens(){
         }
     }
     itens.push(molotovItem)
+
+
+    //newSword 10
+    let newSwordimg = loadImage('./assets/sword.png');
+    let newSwordGround = loadImage('./assets/swordGround.png');
+    let newSwordItem = {
+        tile:newSwordimg,
+        groundTile:newSwordGround,
+        name:'newSword',
+        width:20,
+        height:75,
+        range: 75,
+        damage:50,
+        collide:false,
+        pickable:true,
+        mode:'walking',
+        delay:500,
+        cooldown:false,
+        status:{
+            
+        },
+        use: function(){
+
+            let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+            player.displayWeapon = true;
+            mobs.forEach(mob=>{
+                x1 = player.x;
+                y1 = player.y;
+                x2 = player.x+finish.x;
+                y2 = player.y-finish.y;
+
+                rx = mob.x - (mob.width/2);
+                ry = mob.y - (mob.height/2);
+                rw = mob.width;
+                rh = mob.height;
+
+                if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                    mob.health-=this.damage;
+                }
+            })
+            setTimeout(() => {
+                player.displayWeapon = false;
+            }, this.delay);
+        },
+        interact: function(){
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(newSwordItem));
+                copy.tile = newSwordimg;
+                copy.groundTile = newSwordGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
+            
+        }
+    }
+    itens.push(newSwordItem)
+
+    //longSword 11
+    let longSwordimg = loadImage('./assets/longSword.png');
+    let longSwordGround = loadImage('./assets/swordGround.png');
+    let longSwordItem = {
+        tile:longSwordimg,
+        groundTile:longSwordGround,
+        name:'longSword',
+        width:20,
+        height:125,
+        range: 125,
+        damage:50,
+        collide:false,
+        pickable:true,
+        mode:'walking',
+        delay:500,
+        cooldown:false,
+        status:{
+            
+        },
+        use: function(){
+
+            let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+            player.displayWeapon = true;
+            mobs.forEach(mob=>{
+                x1 = player.x;
+                y1 = player.y;
+                x2 = player.x+finish.x;
+                y2 = player.y-finish.y;
+
+                rx = mob.x - (mob.width/2);
+                ry = mob.y - (mob.height/2);
+                rw = mob.width;
+                rh = mob.height;
+
+                if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                    mob.health-=this.damage;
+                }
+            })
+            setTimeout(() => {
+                player.displayWeapon = false;
+            }, this.delay);
+        },
+        interact: function(){
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(longSwordItem));
+                copy.tile = longSwordimg;
+                copy.groundTile = longSwordGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
+            
+        }
+    }
+    itens.push(longSwordItem)
+
+
 
 
     return itens;

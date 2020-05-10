@@ -10,6 +10,7 @@ function Player(ww,wh,bs,world){
     this.fullHealth=100;
     this.health=this.fullHealth;
     this.damageCooldown = false;
+    this.displayWeapon = false;
     
     //this.name=prompt('player name?');
     this.debounce = true;
@@ -47,6 +48,9 @@ function Player(ww,wh,bs,world){
             
             this.displayHealthBar();
         // }
+        if(this.displayWeapon){
+            this.drawWeapon();
+        }
     }
 
     this.move = function(){
@@ -248,5 +252,22 @@ function Player(ww,wh,bs,world){
             this.displayMode = 'walking';
         }
     }
+
+    this.drawWeapon = function(){
+
+        angle = mouseangle(mouseY,mouseX)
+        let weapon  = this.inventory[this.selectediventory];
+        push();
+        translate(windowWidth/2,windowHeight/2);
+        imageMode(CENTER);
+        angleMode(DEGREES)
+        rotate(-angle+90);
+        fill(25,25,25);
+        rect(weapon.tile,0,-weapon.range/2,weapon.width,weapon.height)
+        image(weapon.tile,0,-weapon.range/2,weapon.width,weapon.height);
+        imageMode(CORNERS);
+        pop()
+    
+}
 
 }

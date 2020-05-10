@@ -216,6 +216,7 @@ function Slime(ww, wh, x, y, bs, index) {
                     blockSize: blockSize,
                     remove:false,
                     interact:item.item.interact,
+                    use:item.item.use,
                     quantity:item.item.quantity
                 }
                 pickups.push(pickup);
