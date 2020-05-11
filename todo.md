@@ -1,7 +1,7 @@
 # list of things to do ✅
 
 - [ ] add splash potion of damage
-- [ ] add bomb
+- [X] add grenade
 - [X] add molotov coquetail
 - [ ] add store
 - [ ] add item inspect

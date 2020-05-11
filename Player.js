@@ -233,7 +233,7 @@ function Player(ww,wh,bs,world){
             this.selectediventory = 8;
             this.equipItem()
         }
-        else if(keyIsDown(59)){ //0
+        else if(keyIsDown(48)){ //0
             this.selectediventory = 9;
             this.equipItem()
         }

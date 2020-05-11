@@ -542,5 +542,109 @@ function loadItens(){
 
 
 
+    //grenade 12
+    let grenadeimg = loadImage('./assets/grenade.png');
+    let grenadeGround = loadImage('./assets/grenade.png');
+    let grenadeExplosionEdge = loadImage('./assets/grenadeExplosionEdges.png')
+    let grenadeExplosionCenter = loadImage('./assets/grenadeExplosionCenter.png')
+    let grenadeGroundOverlay = loadImage('./assets/grenade.png');
+    let grenadeItem = {
+        tile:grenadeimg,
+        groundTile:grenadeGround,
+        name:'grenade',
+        width:100,
+        height:100,
+        range: 600,
+        spread: 1,
+        damage:50,
+        collide:false,
+        pickable:true,
+        mode:'throw',
+        delay:2000,
+        cooldown:false,
+        status:{
+            
+        },
+        interact: function(){
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(grenadeItem));
+                copy.tile = grenadeimg;
+                copy.groundTile = grenadeGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            } else {
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, this.delay);
+            }
+        },
+        use: function(){
+            let mousePos = createVector(mouseX,mouseY);
+            let centerPos = createVector(windowWidth/2,windowHeight/2);
+
+            let dist = mousePos.dist(centerPos);
+
+            if(dist <= this.range/2){
+                let blockX = Math.floor(mouseXToRealX(mouseX)/blockSize);
+                let blockY = Math.floor(mouseYToRealY(mouseY)/blockSize);
+                
+                world.setOverlay(blockX,blockY,grenadeGroundOverlay);
+
+                player.inventory.splice(player.selectediventory,1);
+                player.displayMode = 'walking';
+                displayMessage = true;
+                messageToDisplay = `used a grenade`
+                player.equipItem();
+
+                setTimeout(() => {
+
+                    for(let i = -this.spread; i <= this.spread;i++){
+                        for(let j = -this.spread; j<= this.spread;j++){
+                            world.setOverlay(blockX+i,blockY+j,grenadeExplosionEdge);
+                        }
+                    }
+                    mobs.forEach(mob => {
+                        let mobBlockX = Math.floor(mob.x/blockSize);
+                        let mobBlockY = Math.floor(mob.y/blockSize);
+                        
+                        for(let i = -this.spread; i <= this.spread;i++){
+                            for(let j = -this.spread; j<= this.spread;j++){
+                                if(mobBlockX ==blockX+i && mobBlockY == blockY+j){
+                                    
+                                    mob.health-=70;
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                    })
+
+
+                    setTimeout(() => {
+                        for(let i = -this.spread; i <= this.spread;i++){
+                            for(let j = -this.spread; j<= this.spread;j++){
+                                world.setOverlay(blockX+i,blockY+j,undefined);
+                            }
+                        }
+                        world.setOverlay(blockX,blockY,undefined);
+                    }, 500);
+                    world.setOverlay(blockX,blockY,grenadeExplosionCenter);
+                }, 2000);
+                
+
+            }else{
+                displayMessage = true;
+                messageToDisplay = `can't throw that far`
+            }
+            
+        }
+    }
+    itens.push(grenadeItem)
+
     return itens;
 }
