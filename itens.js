@@ -615,7 +615,7 @@ function loadItens(){
                             for(let j = -this.spread; j<= this.spread;j++){
                                 if(mobBlockX ==blockX+i && mobBlockY == blockY+j){
                                     
-                                    mob.health-=70;
+                                    mob.health-=200;
                                     
                                 }
                             }
@@ -645,6 +645,21 @@ function loadItens(){
         }
     }
     itens.push(grenadeItem)
+
+    //zombie 13
+    let zombieimg = loadImage('./assets/zombie.png');
+    let zombieItem = {
+        tile:zombieimg,
+        name:'zombie',
+        collide:false,
+        pickable:false,
+        mode:'walking',
+        status:{
+        
+        }
+    }
+    itens.push(zombieItem)
+
 
     return itens;
 }

@@ -8,6 +8,15 @@ function spawnHelper(quantity,name,mobs){
                 mobs.push(slime);
             }
             break;
+        case 'zombie':  
+            for(let i = 0; i < quantity;i++){       //mob creation
+                console.log('hereee')
+                let randomx = Math.floor(Math.random()*windowWidth);
+                let randomy = Math.floor(Math.random()*windowHeight);
+                let zombie = new Zombie(windowWidth,windowHeight,randomx,randomy,blockSize);
+                mobs.push(zombie);
+            }
+            break;
     }
 }
 
@@ -29,6 +38,8 @@ function spawnNextWave(number,mobs){
     //         spawnHelper(60,'slime',mobs)
     //         break;
     // }
+    //spawnHelper(10*number,'slime',mobs)
+    spawnHelper(2*number,'zombie',mobs)
     spawnHelper(10*number,'slime',mobs)
 
 }

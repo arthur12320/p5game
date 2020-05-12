@@ -44,6 +44,7 @@ function Player(ww,wh,bs,world){
         // stroke(0)
         // strokeWeight();
         rect((ww/2) - (this.width/2),(wh/2) - (this.height/2),this.width,this.height);
+        ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
         // if(this.fullHealth !== this.health){
             
             this.displayHealthBar();
@@ -120,6 +121,30 @@ function Player(ww,wh,bs,world){
             }
             
         }
+
+        if(keyIsDown(81)){      //q throw item
+            if(this.debounce){
+                this.debounce = false;
+
+                let pickup = {
+                    ...this.inventory[this.selectediventory],
+                    x: this.x,
+                    y: this.y,
+                    blockx: Math.floor(this.x/blockSize),
+                    blocky: Math.floor(this.y/blockSize),
+                    blockSize: blockSize,
+                    remove:false
+                }
+                pickups.push(pickup);
+                this.inventory.splice(this.selectediventory,1)
+                player.displayMode = 'walking';
+                player.equipItem();
+                setTimeout(()=>{
+                    this.debounce = true;
+                },200)
+            }
+            
+        }
         // if(keyIsDown(50)){      //2 melee mode
         //     if(this.debounce){
         //         this.debounce = false;
@@ -169,7 +194,7 @@ function Player(ww,wh,bs,world){
         mobs.forEach(mob => {
             //console.log(element)
 
-                if(blockCollision(this.x,this.y,this.width,this.height,mob.x,mob.y,mob.width,mob.height)){
+                if(blockCollision(this.x-(this.width/2),this.y-(this.height/2),this.width,this.height,mob.x-(mob.width/2),mob.y-(mob.height/2),mob.width,mob.height)){
                     if(!this.damageCooldown){
                         console.log('hit');
                         this.damageCooldown = true;

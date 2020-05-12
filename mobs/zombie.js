@@ -1,15 +1,15 @@
-function Slime(ww, wh, x, y, bs, index) {
+function Zombie(ww, wh, x, y, bs, index) {
     this.x = x; //position center based
     this.y = y; //position center based
-    this.width = 50;
-    this.height = 50;
+    this.width = 100;
+    this.height = 100;
     this.speed = 0.5;
     this.lastMoveX = 0;
     this.lastMoveY = 0;
-    this.name = 'slime';
+    this.name = 'zombie';
     this.canchange = true;
     this.heading = 'right';
-    this.fullHealth = 100;
+    this.fullHealth = 500;
     this.health = this.fullHealth;
     this.damaged = false;
     this.hitanimationFrame = -1;
@@ -17,7 +17,7 @@ function Slime(ww, wh, x, y, bs, index) {
     this.remove = false;
     this.lastMoveX = 0;
     this.lastMoveY = 0;
-    this.damage = 10;
+    this.damage = 50;
     this.effectsImages = {};
 
     this.dropTable = [
@@ -34,14 +34,43 @@ function Slime(ww, wh, x, y, bs, index) {
         },
     ]
 
-    this.sprite = 4;
+    this.sprite = 13;
 
 
 
 
 
     this.display = function () {
-        image(itens[this.sprite].tile, -(player.x - (ww / 2)) + (this.x - (this.width / 2)), -(player.y - (wh / 2)) + (this.y - (this.height / 2)), this.width, this.height);
+        push();
+        translate(-(player.x - (ww / 2)) + (this.x ),-(player.y - (wh / 2)) + (this.y ));
+        imageMode(CENTER);
+        angleMode(DEGREES);
+        if(this.lastMoveX > 0 && this.lastMoveY == 0){ //right
+            
+            this.heading = 'right'
+        }else if(this.lastMoveX < 0 && this.lastMoveY == 0){ //left
+            
+            this.heading = 'left'
+        }else if(this.lastMoveX == 0 && this.lastMoveY > 0){ //down
+            
+            this.heading = 'down'
+        }else if(this.lastMoveX == 0 && this.lastMoveY < 0){ //up
+            
+            this.heading = 'up'
+        }
+
+        if(this.heading == 'right'){
+            rotate(-90);
+        }else if(this.heading == 'left'){
+            rotate(90);
+        }else if(this.heading == 'down'){
+            rotate(0);
+        }else if(this.heading == 'up'){
+            rotate(180);
+        }
+        image(itens[this.sprite].tile, 0,0, this.width, this.height);
+        pop()
+        
         ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
         if (this.damaged) {
             fill(255, 0, 0);
@@ -134,32 +163,6 @@ function Slime(ww, wh, x, y, bs, index) {
     //         }
     //     });
     // }
-
-
-    this.checkMeleeHit = function (player) {
-        let myVector = createVector(this.x - (this.width / 2), this.y - (this.height / 2));
-        console.log(myVector)
-        let finish = polarToCart(player.meleeWeapon.range / 2+player.meleeWeapon.range/4, mouseangle(mouseY, mouseX));
-        let weaponVector = createVector(player.x + finish.x, player.y - finish.y);
-
-        console.log(circleRect(weaponVector.x, weaponVector.y, player.meleeWeapon.range / 4, myVector.x, myVector.y, this.width, this.height))
-
-        if (circleRect(weaponVector.x, weaponVector.y, player.meleeWeapon.range / 4, myVector.x, myVector.y, this.width, this.height)) {
-            this.damaged = true;
-            setTimeout(() => {
-                this.damaged = false;
-            }, 50);
-            this.hitanimationFrame = 0;
-            this.health -= player.meleeWeapon.damage
-            this.lastDamage = player.meleeWeapon.damage;
-            if (this.health <= 0) {
-                this.die();
-                
-            }
-        }
-
-    }
-
 
     this.colide = function(blocks){
        

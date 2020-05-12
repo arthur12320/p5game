@@ -14,6 +14,7 @@ function blockCollision(x1, y1, w1, h1, x2, y2, w2, h2) {
 }
 
 
+
 function mouseangle(l1, l2) {
     let cateto = -(l1 - (windowHeight / 2))
     let cateto2 = l2 - (windowWidth / 2)
