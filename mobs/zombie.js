@@ -71,7 +71,7 @@ function Zombie(ww, wh, x, y, bs, index) {
         image(itens[this.sprite].tile, 0,0, this.width, this.height);
         pop()
         
-        ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
+        //ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
         if (this.damaged) {
             fill(255, 0, 0);
             rect(-(player.x - (ww / 2)) + (this.x - (this.width / 2)), -(player.y - (wh / 2)) + (this.y - (this.height / 2)), this.width, this.height);
