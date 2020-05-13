@@ -4,6 +4,12 @@ a small proff of concept game in p5.js
 all the "game engine" was coded in p5.js with no external libs, currently the game is a wave based top down fighting game, but it has code in it for block placement and other features, i plan to work in different features and different game formats while developing a basic game engine underneath
 
 
+# how to play ?
+
+you can try the game in this link: https://arthur12320.github.io/p5game/index.html
+
+just have fun at the moment
+
 ## Why? 💭
 
 The project came as a idea to keep programming while in downtime, i needed some kind of project to work on that wasn't work or university relates. The idea of a game was always in my mind, because it gave the oportunity to try a number of different ideas and game mechanics. The project is all made in JS by choice, altough i know all the limitations it will impose me, i wanted to see what i could do with one of my favorite programming languages and with no external games lib
@@ -43,14 +49,7 @@ normal mode:
 
 debug mode (acessed with ´p´)
 ![](repoimages/capture2.PNG)
-
-
-# how to play ?
-
-you can try the game in this link: https://arthur12320.github.io/p5game/index.html
-
-just have fun at the moment 
-
+ 
 # thank you:
 
 if you stumbled in this project i would really apreciate it if you gave it a try and gave me any feedback, have fun =)
