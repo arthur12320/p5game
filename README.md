@@ -44,19 +44,12 @@ normal mode:
 debug mode (acessed with ´p´)
 ![](repoimages/capture2.PNG)
 
-# how to "download" ?
-
-1- clone or download de the repo
-
-2- open it with vscode
-
-3- install vscode plugin liveserver
-
-4- click start live server
 
 # how to play ?
 
-you will start with nothing, in the map there's gold (useless at the moment) and a single stick, altough the stick does very little damage it's enough to kill the slimes, the slimes may drop better weapons after a wave is cleared another one will spawn in 2 seconds
+you can try the game in this link: https://arthur12320.github.io/p5game/index.html
+
+just have fun at the moment 
 
 # thank you:
 
