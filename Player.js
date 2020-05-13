@@ -44,7 +44,7 @@ function Player(ww,wh,bs,world){
         // stroke(0)
         // strokeWeight();
         rect((ww/2) - (this.width/2),(wh/2) - (this.height/2),this.width,this.height);
-        ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
+        //ellipse(-(player.x - (ww / 2)) +this.x, -(player.y - (wh / 2)) + this.y,10,10)
         // if(this.fullHealth !== this.health){
             
             this.displayHealthBar();
