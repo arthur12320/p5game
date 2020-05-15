@@ -1,5 +1,5 @@
 function loadItens(){
-    let itens=[]
+    let itens={}
 
 
     //grass 0
@@ -14,7 +14,8 @@ function loadItens(){
         
         }
     }
-    itens.push(grassItem)
+    itens[0]=grassItem;
+
     //wood 1
     let woodimg = loadImage('./assets/wood.png');
     let woodItem = {
@@ -27,7 +28,8 @@ function loadItens(){
         
         }
     }
-    itens.push(woodItem)
+    itens[1]=woodItem;
+
     //stone 2
     let stoneimg = loadImage('./assets/stone.png');
     
@@ -41,7 +43,7 @@ function loadItens(){
         
         }
     }
-    itens.push(stoneItem)
+    itens[2] = stoneItem;
     //door 3
     let doorimg = loadImage('./assets/door.png');
     let dooroppenimg = loadImage('./assets/dooropen.png');
@@ -67,7 +69,7 @@ function loadItens(){
         
         }
     }
-    itens.push(doorItem)
+    itens[3] = doorItem;
     //slime 4
     let slimeimg = loadImage('./assets/slime.png');
     let slimeItem = {
@@ -80,7 +82,7 @@ function loadItens(){
         
         }
     }
-    itens.push(slimeItem)
+    itens[4] = slimeItem;
 
     //stick 5
     let stickimg = loadImage('./assets/stick.png');
@@ -93,7 +95,7 @@ function loadItens(){
         height:75,
         collide:false,
         pickable:true,
-        mode:'melee',
+        mode:'walking',
         range: 75,
         damage:5,
         delay:500,
@@ -101,19 +103,52 @@ function loadItens(){
         status:{
             
         },
+        use: function(){
+            if(!player.cooldown){
+                player.cooldown = true;
+                let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+                player.displayWeapon = true;
+                mobs.forEach(mob=>{
+                    x1 = player.x;
+                    y1 = player.y;
+                    x2 = player.x+finish.x;
+                    y2 = player.y-finish.y;
+
+                    rx = mob.x - (mob.width/2);
+                    ry = mob.y - (mob.height/2);
+                    rw = mob.width;
+                    rh = mob.height;
+
+                    if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                        mob.health-=this.damage;
+                    }
+                })
+                setTimeout(() => {
+                    player.displayWeapon = false;
+                    player.cooldown = false;
+                }, this.delay);
+            }
+        },
         interact: function(){
             if(player.inventory.length < player.maxinventory){
                 let copy = JSON.parse(JSON.stringify(stickItem));
                 copy.tile = stickimg;
                 copy.groundTile = stickGround;
-                player.inventory.push(copy);
+                copy.use = this.use;
+                addItemToPlayer(copy);
                 this.remove = true;
                 player.equipItem();
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
             }
         }
             
     }
-    itens.push(stickItem)
+    itens[5] = stickItem;
 
     //sword 6
     let swordimg = loadImage('./assets/sword.png');
@@ -176,7 +211,7 @@ function loadItens(){
             
         }
     }
-    itens.push(swordItem)
+    itens[6] = swordItem;
 
 
 
@@ -232,7 +267,7 @@ function loadItens(){
             }, 2000);
         }
     }
-    itens.push(goldItem)
+    itens[7] = goldItem;
 
     //health_potion 8
     let healthPotionimg = loadImage('./assets/health_potion.png');
@@ -240,7 +275,7 @@ function loadItens(){
     let healthPotionItem = {
         tile:healthPotionimg,
         groundTile:healthPotionGround,
-        name:'healthPotion',
+        name:'health Potion',
         width:100,
         height:100,
         range: 75,
@@ -300,7 +335,7 @@ function loadItens(){
         },
         
     }
-    itens.push(healthPotionItem)
+    itens[8] = healthPotionItem;
 
 
     //molotov 9
@@ -410,7 +445,7 @@ function loadItens(){
             
         }
     }
-    itens.push(molotovItem)
+    itens[9] = molotovItem;
 
 
     //newSword 10
@@ -433,27 +468,30 @@ function loadItens(){
             
         },
         use: function(){
+            if(!player.cooldown){
+                player.cooldown = true;
+                let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+                player.displayWeapon = true;
+                mobs.forEach(mob=>{
+                    x1 = player.x;
+                    y1 = player.y;
+                    x2 = player.x+finish.x;
+                    y2 = player.y-finish.y;
 
-            let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
-            player.displayWeapon = true;
-            mobs.forEach(mob=>{
-                x1 = player.x;
-                y1 = player.y;
-                x2 = player.x+finish.x;
-                y2 = player.y-finish.y;
+                    rx = mob.x - (mob.width/2);
+                    ry = mob.y - (mob.height/2);
+                    rw = mob.width;
+                    rh = mob.height;
 
-                rx = mob.x - (mob.width/2);
-                ry = mob.y - (mob.height/2);
-                rw = mob.width;
-                rh = mob.height;
-
-                if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
-                    mob.health-=this.damage;
-                }
-            })
-            setTimeout(() => {
-                player.displayWeapon = false;
-            }, this.delay);
+                    if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                        mob.health-=this.damage;
+                    }
+                })
+                setTimeout(() => {
+                    player.displayWeapon = false;
+                    player.cooldown = false;
+                }, this.delay);
+            }
         },
         interact: function(){
             if(player.inventory.length < player.maxinventory){
@@ -465,6 +503,7 @@ function loadItens(){
                 this.remove = true;
                 player.equipItem();
             }else{
+                console.log('full invenotury')
                 displayMessage = true;
                 messageToDisplay = `full inventory`
                 setTimeout(() => {
@@ -474,7 +513,7 @@ function loadItens(){
             
         }
     }
-    itens.push(newSwordItem)
+    itens[10] = newSwordItem;
 
     //longSword 11
     let longSwordimg = loadImage('./assets/longSword.png');
@@ -496,27 +535,30 @@ function loadItens(){
             
         },
         use: function(){
+            if(!player.cooldown){
+                player.cooldown = true;
+                let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+                player.displayWeapon = true;
+                mobs.forEach(mob=>{
+                    x1 = player.x;
+                    y1 = player.y;
+                    x2 = player.x+finish.x;
+                    y2 = player.y-finish.y;
 
-            let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
-            player.displayWeapon = true;
-            mobs.forEach(mob=>{
-                x1 = player.x;
-                y1 = player.y;
-                x2 = player.x+finish.x;
-                y2 = player.y-finish.y;
+                    rx = mob.x - (mob.width/2);
+                    ry = mob.y - (mob.height/2);
+                    rw = mob.width;
+                    rh = mob.height;
 
-                rx = mob.x - (mob.width/2);
-                ry = mob.y - (mob.height/2);
-                rw = mob.width;
-                rh = mob.height;
-
-                if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
-                    mob.health-=this.damage;
-                }
-            })
-            setTimeout(() => {
-                player.displayWeapon = false;
-            }, this.delay);
+                    if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                        mob.health-=this.damage;
+                    }
+                })
+                setTimeout(() => {
+                    player.displayWeapon = false;
+                    player.cooldown = false;
+                }, this.delay);
+            }
         },
         interact: function(){
             if(player.inventory.length < player.maxinventory){
@@ -537,7 +579,7 @@ function loadItens(){
             
         }
     }
-    itens.push(longSwordItem)
+    itens[11] = longSwordItem;
 
 
 
@@ -644,7 +686,7 @@ function loadItens(){
             
         }
     }
-    itens.push(grenadeItem)
+    itens[12] = grenadeItem
 
     //zombie 13
     let zombieimg = loadImage('./assets/zombie.png');
@@ -658,7 +700,75 @@ function loadItens(){
         
         }
     }
-    itens.push(zombieItem)
+    itens[13] = zombieItem
+
+
+    //kabutoSword 14
+    let kabutoSwordimg = loadImage('./assets/kabutoSword.png');
+    let kabutoSwordGround = loadImage('./assets/kabutoswordGround.png');
+    let kabutoSwordItem = {
+        tile:kabutoSwordimg,
+        groundTile:kabutoSwordGround,
+        name:'kabutoSword',
+        width:20,
+        height:125,
+        range: 125,
+        damage:80,
+        collide:false,
+        pickable:true,
+        mode:'walking',
+        delay:700,
+        cooldown:false,
+        status:{
+            
+        },
+        use: function(){
+            if(!player.cooldown){
+                player.cooldown = true;
+                let finish  = polarToCart(this.range,mouseangle(mouseY,mouseX));
+                player.displayWeapon = true;
+                mobs.forEach(mob=>{
+                    x1 = player.x;
+                    y1 = player.y;
+                    x2 = player.x+finish.x;
+                    y2 = player.y-finish.y;
+
+                    rx = mob.x - (mob.width/2);
+                    ry = mob.y - (mob.height/2);
+                    rw = mob.width;
+                    rh = mob.height;
+
+                    if(lineRect(x1,y1,x2,y2,rx,ry,rw,rh)){
+                        mob.health-=this.damage;
+                    }
+                })
+                setTimeout(() => {
+                    player.displayWeapon = false;
+                    player.cooldown = false;
+                }, this.delay);
+            }
+        },
+        interact: function(){
+            if(player.inventory.length < player.maxinventory){
+                let copy = JSON.parse(JSON.stringify(kabutoSwordItem));
+                copy.tile = kabutoSwordimg;
+                copy.groundTile = kabutoSwordGround;
+                copy.use = this.use;
+                player.inventory.push(copy);
+                this.remove = true;
+                player.equipItem();
+            }else{
+                displayMessage = true;
+                messageToDisplay = `full inventory`
+                setTimeout(() => {
+                    displayMessage=false;
+                }, 2000);
+            }
+            
+        }
+    }
+    itens[14] = kabutoSwordItem
+    ;
 
 
     return itens;

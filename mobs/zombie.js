@@ -22,15 +22,23 @@ function Zombie(ww, wh, x, y, bs, index) {
 
     this.dropTable = [
         {
-            item: itens[6],
+            item: itens[11],
+            dropChance: 10  //out of 100
+        },
+        {
+            item: itens[12],
+            dropChance: 10  //out of 100
+        },
+        {
+            item: itens[9],
             dropChance: 10  //out of 100
         },
         {
             item: {
                 ...itens[7],
-                quantity:20
+                quantity:30
             },
-            dropChance: 90  //out of 100
+            dropChance: 70  //out of 100
         },
     ]
 

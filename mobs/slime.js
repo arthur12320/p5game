@@ -22,7 +22,11 @@ function Slime(ww, wh, x, y, bs, index) {
 
     this.dropTable = [
         {
-            item: itens[6],
+            item: itens[8],
+            dropChance: 10  //out of 100
+        },
+        {
+            item: itens[10],
             dropChance: 10  //out of 100
         },
         {
@@ -30,7 +34,7 @@ function Slime(ww, wh, x, y, bs, index) {
                 ...itens[7],
                 quantity:20
             },
-            dropChance: 90  //out of 100
+            dropChance: 80  //out of 100
         },
     ]
 

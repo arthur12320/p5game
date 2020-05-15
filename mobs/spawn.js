@@ -4,8 +4,17 @@ function spawnHelper(quantity,name,mobs){
             for(let i = 0; i< quantity;i++){       //mob creation
                 let randomx = Math.floor(Math.random()*windowWidth);
                 let randomy = Math.floor(Math.random()*windowHeight);
-                let slime = new Slime(windowWidth,windowHeight,randomx,randomy,blockSize);
-                mobs.push(slime);
+                if(randomx <= player.x - 300 || randomx >= player.x + 300 ){
+                    if(randomy <= player.y - 300 || randomy >= player.y + 300){
+                        let slime = new Slime(windowWidth,windowHeight,randomx,randomy,blockSize);
+                        mobs.push(slime);
+                    }else{
+                        i--
+                    }
+                }else{
+                    i--
+                }
+                
             }
             break;
         case 'zombie':  
@@ -13,8 +22,17 @@ function spawnHelper(quantity,name,mobs){
                 console.log('hereee')
                 let randomx = Math.floor(Math.random()*windowWidth);
                 let randomy = Math.floor(Math.random()*windowHeight);
-                let zombie = new Zombie(windowWidth,windowHeight,randomx,randomy,blockSize);
-                mobs.push(zombie);
+                if(randomx <= player.x - 300 || randomx >= player.x + 300 ){
+                    if(randomy <= player.y - 300 || randomy >= player.y + 300){
+                        let zombie = new Zombie(windowWidth,windowHeight,randomx,randomy,blockSize);
+                        mobs.push(zombie);
+                    }else{
+                        i--
+                    }
+                }else{
+                    i--
+                }
+                
             }
             break;
     }
@@ -39,7 +57,7 @@ function spawnNextWave(number,mobs){
     //         break;
     // }
     //spawnHelper(10*number,'slime',mobs)
-    spawnHelper(2*number,'zombie',mobs)
-    spawnHelper(10*number,'slime',mobs)
+    //spawnHelper(Math.floor(0.5*number),'zombie',mobs)
+    //spawnHelper(5*number,'slime',mobs)
 
 }

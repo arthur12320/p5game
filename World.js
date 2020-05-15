@@ -7,167 +7,90 @@ function World(blockSize,pickups){
     for(let i = 0;i < blocksx;i++){
         let col=[]
         for(let j =0;j<blocksy;j++){
-            let block = {
-                name:itens[0].name,
-                tile:itens[0].tile,
-                x: i*blockSize,
-                y: j*blockSize,
-                blockSize: blockSize,
-                collide:itens[0].collide,
-                interact:itens[0].interact,
-                status: itens[0].status
-            }
-            col.push(block);
+            // if(i == 0 || i == blocksx-1 || j == 0 || blocksy == 0){
+            //     let block = {
+            //         name:itens[2].name,
+            //         tile:itens[2].tile,
+            //         x: i*blockSize,
+            //         y: j*blockSize,
+            //         blockSize: blockSize,
+            //         collide:itens[2].collide,
+            //         interact:itens[2].interact,
+            //         status: itens[2].status
+            //     }
+            //     col.push(block);
+            // }else{
+                let block = {
+                    name:itens[0].name,
+                    tile:itens[0].tile,
+                    x: i*blockSize,
+                    y: j*blockSize,
+                    blockSize: blockSize,
+                    collide:itens[0].collide,
+                    interact:itens[0].interact,
+                    status: itens[0].status
+                }
+                col.push(block);
+            // }
         }
         lines.push(col);
         console.log(`loading ${i}/${blocksx}`);
         
     }
 
-    for(let i = 0;i < 1;i++){
+    let block = {
+        name:itens[2].name,
+        tile:itens[2].tile,
+        x: 3*blockSize,
+        y: 3*blockSize,
+        blockSize: blockSize,
+        collide:itens[2].collide,
+        interact:itens[2].interact,
+        status: itens[2].status
+    }
+    lines[3][3] = block;
+
+    let block2 = {
+        name:itens[3].name,
+        tile:itens[3].tile,
+        x: 4*blockSize,
+        y: 4*blockSize,
+        blockSize: blockSize,
+        collide:itens[3].collide,
+        interact:itens[3].interact,
+        status: itens[3].status
+    }
+    lines[4][4] = block2;
+
+    for(let i = 0;i < 35;i++){
         let randomx = Math.floor(Math.random()*blocksx);
         let randomy = Math.floor(Math.random()*blocksy);
 
         let pickup = {
-            name:itens[5].name,
-            tile:itens[5].tile,
-            groundTile:itens[5].groundTile,
+            ...itens[5],
             x: randomx*blockSize,
             y: randomy*blockSize,
             blockx: randomx,
             blocky: randomy,
-            blockSize: blockSize,
-            remove:false,
-            interact:itens[5].interact,
+            blockSize: blockSize
         }
         pickups.push(pickup);
     }
 
-    // for(let i = 0;i < 1;i++){
-    //     let randomx = Math.floor(Math.random()*blocksx);
-    //     let randomy = Math.floor(Math.random()*blocksy);
-
-    //     let pickup = {
-    //         name:itens[6].name,
-    //         tile:itens[6].tile,
-    //         groundTile:itens[6].groundTile,
-    //         x: randomx*blockSize,
-    //         y: randomy*blockSize,
-    //         blockx: randomx,
-    //         blocky: randomy,
-    //         blockSize: blockSize,
-    //         remove:false,
-    //         interact:itens[6].interact,
-    //     }
-    //     pickups.push(pickup);
-    // }
-
-
-    for(let i = 0;i < 5;i++){
+    for(let i = 0;i < 20;i++){
         let randomx = Math.floor(Math.random()*blocksx);
         let randomy = Math.floor(Math.random()*blocksy);
 
         let pickup = {
-            name:itens[7].name,
-            tile:itens[7].tile,
-            groundTile:itens[7].groundTile,
+            ...itens[14],
             x: randomx*blockSize,
             y: randomy*blockSize,
             blockx: randomx,
             blocky: randomy,
-            blockSize: blockSize,
-            remove:false,
-            interact:itens[7].interact,
-            quantity: 10
+            blockSize: blockSize
         }
         pickups.push(pickup);
     }
-
-    for(let i = 0;i < 5;i++){
-        let randomx = Math.floor(Math.random()*blocksx);
-        let randomy = Math.floor(Math.random()*blocksy);
-
-        let pickup = {
-            ...itens[8],
-            name:itens[8].name,
-            tile:itens[8].tile,
-            x: randomx*blockSize,
-            y: randomy*blockSize,
-            blockx: randomx,
-            blocky: randomy,
-            blockSize: blockSize,
-            interact:itens[8].interact,
-            use:itens[8].use,
-            remove:false
-        }
-        pickups.push(pickup);
-    }
-
-    for(let i = 0;i < 5;i++){
-        let randomx = Math.floor(Math.random()*blocksx);
-        let randomy = Math.floor(Math.random()*blocksy);
-
-        let pickup = {
-            ...itens[9],
-            x: randomx*blockSize,
-            y: randomy*blockSize,
-            blockx: randomx,
-            blocky: randomy,
-            blockSize: blockSize,
-            remove:false
-        }
-        pickups.push(pickup);
-    }
-
-    for(let i = 0;i < 5;i++){
-        let randomx = Math.floor(Math.random()*blocksx);
-        let randomy = Math.floor(Math.random()*blocksy);
-
-        let pickup = {
-            ...itens[10],
-            x: randomx*blockSize,
-            y: randomy*blockSize,
-            blockx: randomx,
-            blocky: randomy,
-            blockSize: blockSize,
-            remove:false
-        }
-        pickups.push(pickup);
-    }
-
-    for(let i = 0;i < 5;i++){
-        let randomx = Math.floor(Math.random()*blocksx);
-        let randomy = Math.floor(Math.random()*blocksy);
-
-        let pickup = {
-            ...itens[11],
-            x: randomx*blockSize,
-            y: randomy*blockSize,
-            blockx: randomx,
-            blocky: randomy,
-            blockSize: blockSize,
-            remove:false
-        }
-        pickups.push(pickup);
-    }
-    
-    for(let i = 0;i < 5;i++){
-        let randomx = Math.floor(Math.random()*blocksx);
-        let randomy = Math.floor(Math.random()*blocksy);
-
-        let pickup = {
-            ...itens[12],
-            x: randomx*blockSize,
-            y: randomy*blockSize,
-            blockx: randomx,
-            blocky: randomy,
-            blockSize: blockSize,
-            remove:false
-        }
-        pickups.push(pickup);
-    }
-    
-    
     
     this.draw = function(posx,posy,s,x,y){
 

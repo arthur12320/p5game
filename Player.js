@@ -20,7 +20,8 @@ function Player(ww,wh,bs,world){
     }
 
     //inventory
-    this.maxinventory = 10;
+    this.maxinventory = 25;
+    this.maxHotBar = 10;
     this.selectediventory = 0;
     this.inventory = [
         
@@ -175,18 +176,18 @@ function Player(ww,wh,bs,world){
     }
 
     this.colide = function(blocks){
+       
         blocks.forEach(element => {
             //console.log(element)
             if(element.collide){
                 
-                if(blockCollision(this.x-(this.width/2),this.y-(this.height/2),this.width,this.height,element.x,100,element.blockSize,50)){
+                if(blockCollision(this.x-(this.width/2),this.y-(this.height/2),this.width,this.height,element.x,element.y,element.blockSize,element.blockSize)){
+                    
                     this.x -= this.lastMoveX;
                     this.y -= this.lastMoveY;
                 }
             }
         });
-
-        
     }
 
 
